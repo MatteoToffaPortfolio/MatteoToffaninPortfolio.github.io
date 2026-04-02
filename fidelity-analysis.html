@@ -384,6 +384,27 @@
       border-top: 1px solid var(--border);
     }
 
+    /* ── DOWNLOAD BTN ── */
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 24px;
+      background: var(--tag-bg);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: .875rem;
+      font-weight: 600;
+      transition: background .2s, color .2s;
+    }
+
+    .download-btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
     /* ── DIVIDER ── */
     hr {
       border: none;
@@ -581,6 +602,13 @@
       <div class="dashboard-block">
         <img src="image3.png" alt="Fidelity & Retention">
         <div class="caption">Fidelity & Retention — Recency, clienti attivi vs a rischio vs persi</div>
+      </div>
+      <div class="sub-block">
+        <h3>Download Dashboard</h3>
+        <a href="https://drive.google.com/file/d/1dIlc71cy_GvmoeH9lX-RVZE37sejneVO/view?usp=drive_link" class="download-btn" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Scarica il file Power BI (.pbix)
+        </a>
       </div>
     </div>
 
