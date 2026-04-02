@@ -39,7 +39,7 @@
     }
 
     nav .inner {
-      max-width: 860px;
+      max-width: 900px;
       margin: 0 auto;
       padding: 0 24px;
       height: 60px;
@@ -58,46 +58,66 @@
       text-decoration: none;
       font-size: .875rem;
       transition: color .2s;
+      position: relative;
+    }
+
+    .back-link::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 100%;
+      height: 1.5px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform .3s ease;
     }
 
     .back-link:hover { color: var(--text); }
 
-    /* ── LAYOUT ── */
-    .page {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 60px 24px 100px;
+    .back-link:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
     }
 
-    /* ── HEADER ── */
+    /* ── LAYOUT ── */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 72px 24px 120px;
+    }
+
+    /* ── PROJECT HEADER ── */
     .project-header {
-      margin-bottom: 56px;
-      padding-bottom: 40px;
+      margin-bottom: 72px;
+      padding-bottom: 56px;
       border-bottom: 1px solid var(--border);
     }
 
     .project-meta {
-      font-size: .72rem;
+      font-size: .7rem;
       font-weight: 700;
-      letter-spacing: .12em;
+      letter-spacing: .14em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 16px;
-    }
-
-    .project-header h1 {
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 800;
-      letter-spacing: -.04em;
-      line-height: 1.15;
       margin-bottom: 20px;
     }
 
-    .project-header p {
+    .project-header h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -.04em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .project-header .lead {
       color: var(--muted);
-      font-size: 1.05rem;
-      max-width: 640px;
-      margin-bottom: 28px;
+      font-size: 1.1rem;
+      max-width: 660px;
+      margin-bottom: 32px;
+      line-height: 1.75;
     }
 
     .tags {
@@ -107,106 +127,187 @@
     }
 
     .tag {
-      padding: 4px 12px;
+      padding: 4px 14px;
       background: var(--tag-bg);
       border: 1px solid var(--border);
-      border-radius: 6px;
+      border-radius: 100px;
       font-size: .75rem;
       color: var(--muted);
       font-weight: 500;
     }
 
-    /* ── SECTIONS ── */
+    /* ── SECTION ── */
     .section {
-      margin-bottom: 56px;
+      margin-bottom: 72px;
+    }
+
+    .section-label {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
     }
 
     .section h2 {
-      font-size: 1.4rem;
-      font-weight: 700;
+      font-size: 1.7rem;
+      font-weight: 800;
       letter-spacing: -.03em;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .section > p {
+      color: var(--muted);
+      font-size: .975rem;
+      max-width: 720px;
       margin-bottom: 16px;
-      color: var(--text);
     }
 
-    .section h3 {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--accent);
-      margin: 24px 0 8px;
-      text-transform: uppercase;
-      letter-spacing: .07em;
-      font-size: .8rem;
+    /* ── SUB-BLOCK ── */
+    .sub-block {
+      margin-top: 36px;
     }
 
-    .section p {
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-
-    .section ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-
-    .section ul li {
-      color: var(--muted);
-      padding-left: 16px;
-      position: relative;
-    }
-
-    .section ul li::before {
-      content: '—';
-      position: absolute;
-      left: 0;
-      color: var(--accent);
-      font-size: .75rem;
-    }
-
-    /* ── INSIGHT CARDS ── */
-    .insights-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 16px;
-    }
-
-    .insight-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px 22px;
-    }
-
-    .insight-card .insight-num {
-      font-size: .7rem;
+    .sub-block h3 {
+      font-size: .78rem;
       font-weight: 700;
       letter-spacing: .1em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 8px;
+      margin-bottom: 14px;
     }
 
-    .insight-card h4 {
-      font-size: .95rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-      letter-spacing: -.01em;
-    }
-
-    .insight-card p {
-      font-size: .85rem;
+    .sub-block p {
       color: var(--muted);
-      margin-bottom: 10px;
+      font-size: .95rem;
+      margin-bottom: 12px;
     }
 
-    .insight-card .action {
-      font-size: .78rem;
-      color: var(--accent);
-      font-weight: 600;
+    /* ── BULLET LIST ── */
+    .bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
+
+    .bullet-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    .bullet-list li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      margin-top: 9px;
+    }
+
+    /* ── INLINE GRID (business logic) ── */
+    .logic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .logic-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: .875rem;
+    }
+
+    .logic-item .logic-rule {
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .logic-item .logic-detail {
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    /* ── RFM METRICS ── */
+    .rfm-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .rfm-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px 20px;
+      text-align: center;
+    }
+
+    .rfm-letter {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -.04em;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .rfm-name {
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .rfm-desc {
+      font-size: .82rem;
+      color: var(--muted);
+    }
+
+    /* ── SEGMENT PILLS ── */
+    .segment-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .segment-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: .875rem;
+    }
+
+    .segment-pill .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot-high  { background: var(--accent); }
+    .dot-mid   { background: var(--accent-2); }
+    .dot-low   { background: var(--muted); }
+    .dot-active { background: #22c55e; }
+    .dot-risk   { background: #f59e0b; }
+    .dot-lost   { background: #ef4444; }
 
     /* ── DASHBOARD IMAGES ── */
     .dashboard-block {
@@ -229,11 +330,65 @@
       border-top: 1px solid var(--border);
     }
 
+    /* ── INSIGHT CARDS ── */
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .insight-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: border-color .25s, transform .25s;
+    }
+
+    .insight-card:hover {
+      border-color: rgba(46,196,208,.35);
+      transform: translateY(-3px);
+    }
+
+    .insight-num {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .insight-card h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.3;
+    }
+
+    .insight-card p {
+      font-size: .875rem;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .insight-action {
+      font-size: .78rem;
+      color: var(--accent);
+      font-weight: 600;
+      padding-top: 6px;
+      border-top: 1px solid var(--border);
+    }
+
     /* ── DIVIDER ── */
     hr {
       border: none;
       border-top: 1px solid var(--border);
-      margin: 48px 0;
+      margin: 0 0 72px;
     }
 
     /* ── FOOTER ── */
@@ -243,6 +398,12 @@
       text-align: center;
       color: var(--muted);
       font-size: .8rem;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .rfm-grid { grid-template-columns: 1fr; }
+      .logic-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -266,11 +427,12 @@
     <!-- HEADER -->
     <header class="project-header">
       <div class="project-meta">02 — Customer Analytics</div>
-      <h1>Retail Customer Fidelity Analysis (RFM)</h1>
-      <p>Analisi del comportamento clienti nel settore retail tramite modello RFM, con segmentazione, dashboard Power BI e raccomandazioni strategiche per marketing, retention e crescita.</p>
+      <h1>Retail Customer<br>Fidelity Analysis (RFM)</h1>
+      <p class="lead">Analisi del comportamento clienti nel settore retail tramite modello RFM, con segmentazione avanzata, dashboard Power BI e raccomandazioni strategiche per marketing, retention e crescita del fatturato.</p>
       <div class="tags">
         <span class="tag">Python</span>
-        <span class="tag">Pandas · NumPy</span>
+        <span class="tag">Pandas</span>
+        <span class="tag">NumPy</span>
         <span class="tag">Power BI</span>
         <span class="tag">RFM Analysis</span>
         <span class="tag">Customer Segmentation</span>
@@ -281,92 +443,130 @@
 
     <!-- OBIETTIVO -->
     <div class="section">
+      <div class="section-label">Overview</div>
       <h2>Obiettivo del progetto</h2>
       <p>Analizzare il comportamento dei clienti nel settore retail utilizzando un approccio RFM (Recency, Frequency, Monetary), con l'obiettivo di identificare segmenti ad alto valore e supportare decisioni di marketing, retention e crescita.</p>
+      <p>Il dataset è stato costruito replicando la struttura di dati retail reali, mantenendo logiche di business coerenti e sostituendo le informazioni sensibili.</p>
     </div>
 
     <hr>
 
     <!-- DATA PREPARATION -->
     <div class="section">
+      <div class="section-label">Fase 01</div>
       <h2>Data Preparation & EDA</h2>
-      <p>Il dataset è stato costruito replicando la struttura di dati retail reali, mantenendo logiche di business coerenti e sostituendo le informazioni sensibili. L'obiettivo di questa fase è stato preparare un dataset affidabile per analisi fidelity cliente e data visualization.</p>
 
-      <h3>Data Cleaning</h3>
+      <div class="sub-block">
+        <h3>Validazione iniziale</h3>
+        <p>Verificata la completezza delle colonne chiave. Nessun valore nullo rilevato nelle variabili critiche.</p>
+        <ul class="bullet-list">
+          <li>ID_Card</li>
+          <li>Prezzo</li>
+          <li>Prodotto</li>
+          <li>Data</li>
+        </ul>
+      </div>
 
-      <h3>1. Validazione iniziale</h3>
-      <p>Verificata la completezza delle colonne chiave:</p>
-      <ul>
-        <li>ID_Card</li>
-        <li>Prezzo</li>
-        <li>Prodotto</li>
-        <li>Data</li>
-      </ul>
-      <p>Nessun valore nullo rilevato nelle variabili critiche.</p>
+      <div class="sub-block">
+        <h3>Coerenza dati — Business Logic</h3>
+        <p>Controlli effettuati per garantire coerenza con le logiche del dominio retail.</p>
+        <div class="logic-grid">
+          <div class="logic-item">
+            <div class="logic-rule">Sesso ↔ Reparto</div>
+            <div class="logic-detail">Cliente M → Reparto Uomo · Cliente F → Reparto Donna</div>
+          </div>
+          <div class="logic-item">
+            <div class="logic-rule">Prodotto ↔ Mondo</div>
+            <div class="logic-detail">T-shirt / Jeans → Casual · Scarpe / Felpe → Sport · Giacche → Luxury</div>
+          </div>
+          <div class="logic-item">
+            <div class="logic-rule">Prezzo ↔ Categoria</div>
+            <div class="logic-detail">T-shirt fascia bassa · Jeans / Felpe fascia media · Giacche fascia alta</div>
+          </div>
+        </div>
+      </div>
 
-      <h3>2. Coerenza dati — Business Logic</h3>
-      <p>Controlli effettuati per garantire coerenza con logiche retail reali:</p>
-      <ul>
-        <li>Sesso ↔ Reparto: Cliente M → Reparto Uomo / Cliente F → Reparto Donna</li>
-        <li>Prodotto ↔ Mondo: T-shirt / Jeans → Casual · Scarpe / Felpe → Sport · Giacche → Luxury</li>
-        <li>Prezzo ↔ Categoria: T-shirt fascia bassa · Jeans / Felpe fascia media · Giacche fascia alta</li>
-      </ul>
+      <div class="sub-block">
+        <h3>Gestione duplicati & Outlier</h3>
+        <ul class="bullet-list">
+          <li>Verifica duplicati su chiavi transazionali: (ID_Card, Data, Codice_Articolo, Prezzo)</li>
+          <li>Rimozione dei duplicati per evitare distorsioni nelle metriche cliente</li>
+          <li>Analisi della distribuzione dei prezzi e verifica coerenza per categoria</li>
+        </ul>
+      </div>
 
-      <h3>3. Gestione duplicati</h3>
-      <p>Verifica duplicati su chiavi transazionali: (ID_Card, Data, Codice_Articolo, Prezzo). Rimozione dei duplicati per evitare distorsioni nelle metriche cliente.</p>
+      <div class="sub-block">
+        <h3>Data Transformation</h3>
+        <ul class="bullet-list">
+          <li>Creazione della colonna Data a partire da Anno, Mese, Giorno</li>
+          <li>Aggiunta di Giorno_Settimana e flag Weekend (booleano)</li>
+          <li>Uniformati valori categorici e conversione corretta dei tipi dati</li>
+        </ul>
+      </div>
 
-      <h3>4. Controllo outlier</h3>
-      <p>Analisi della distribuzione dei prezzi e verifica coerenza rispetto alla categoria prodotto.</p>
-
-      <h3>Data Transformation</h3>
-      <ul>
-        <li>Creazione della colonna Data a partire da Anno, Mese, Giorno</li>
-        <li>Aggiunta di Giorno_Settimana e flag Weekend (booleano)</li>
-        <li>Uniformati valori categorici e conversione corretta dei tipi dati</li>
-      </ul>
-
-      <h3>EDA — Pattern identificati</h3>
-      <ul>
-        <li>Vendite per giorno della settimana e confronto weekend vs weekday</li>
-        <li>Identificazione picchi di vendita e performance per prodotto/categoria</li>
-        <li>Frequenza acquisti per cliente, distribuzione spesa, clienti ricorrenti vs occasionali</li>
-        <li>Distribuzione prezzi per categoria e verifica clustering naturale delle fasce</li>
-      </ul>
+      <div class="sub-block">
+        <h3>EDA — Pattern identificati</h3>
+        <ul class="bullet-list">
+          <li>Vendite per giorno della settimana e confronto weekend vs weekday</li>
+          <li>Identificazione picchi di vendita e performance per prodotto/categoria</li>
+          <li>Frequenza acquisti per cliente, distribuzione spesa, clienti ricorrenti vs occasionali</li>
+          <li>Distribuzione prezzi per categoria e verifica clustering naturale delle fasce</li>
+        </ul>
+      </div>
     </div>
 
     <hr>
 
     <!-- RFM -->
     <div class="section">
+      <div class="section-label">Fase 02</div>
       <h2>Customer Analysis & RFM Modeling</h2>
-      <p>Sono state costruite tre metriche di fidelity cliente:</p>
-      <ul>
-        <li><strong style="color:var(--text)">Monetary</strong> — Spesa totale per cliente</li>
-        <li><strong style="color:var(--text)">Frequency</strong> — Numero acquisti per cliente</li>
-        <li><strong style="color:var(--text)">Recency</strong> — Giorni dall'ultimo acquisto</li>
-      </ul>
+      <p>Costruzione delle tre metriche fondamentali per la fidelity cliente.</p>
 
-      <h3>Segmentazione clienti</h3>
-      <ul>
-        <li>Top Client — alta spesa e alta frequenza</li>
-        <li>Medium Client — valore intermedio</li>
-        <li>Low Client — bassa spesa</li>
-      </ul>
+      <div class="rfm-grid">
+        <div class="rfm-card">
+          <div class="rfm-letter">R</div>
+          <div class="rfm-name">Recency</div>
+          <div class="rfm-desc">Giorni dall'ultimo acquisto</div>
+        </div>
+        <div class="rfm-card">
+          <div class="rfm-letter">F</div>
+          <div class="rfm-name">Frequency</div>
+          <div class="rfm-desc">Numero di acquisti per cliente</div>
+        </div>
+        <div class="rfm-card">
+          <div class="rfm-letter">M</div>
+          <div class="rfm-name">Monetary</div>
+          <div class="rfm-desc">Spesa totale per cliente</div>
+        </div>
+      </div>
 
-      <h3>Stato cliente (Recency)</h3>
-      <ul>
-        <li>Attivo — ≤ 30 giorni</li>
-        <li>A rischio — 31–90 giorni</li>
-        <li>Perso — &gt; 90 giorni</li>
-      </ul>
+      <div class="sub-block">
+        <h3>Segmentazione clienti</h3>
+        <div class="segment-row">
+          <div class="segment-pill"><span class="dot dot-high"></span>Top Client — alta spesa e alta frequenza</div>
+          <div class="segment-pill"><span class="dot dot-mid"></span>Medium Client — valore intermedio</div>
+          <div class="segment-pill"><span class="dot dot-low"></span>Low Client — bassa spesa</div>
+        </div>
+      </div>
+
+      <div class="sub-block">
+        <h3>Stato cliente (Recency)</h3>
+        <div class="segment-row">
+          <div class="segment-pill"><span class="dot dot-active"></span>Attivo — ≤ 30 giorni</div>
+          <div class="segment-pill"><span class="dot dot-risk"></span>A rischio — 31–90 giorni</div>
+          <div class="segment-pill"><span class="dot dot-lost"></span>Perso — &gt; 90 giorni</div>
+        </div>
+      </div>
     </div>
 
     <hr>
 
     <!-- DASHBOARD -->
     <div class="section">
+      <div class="section-label">Fase 03</div>
       <h2>Dashboard Power BI</h2>
-      <p>La dashboard è strutturata in tre sezioni principali.</p>
+      <p>La dashboard è strutturata in tre sezioni principali per coprire l'intero ciclo analitico: dai KPI di vendita alla fidelity cliente.</p>
 
       <div class="dashboard-block">
         <img src="image1.png" alt="Overview Vendite">
@@ -388,56 +588,58 @@
 
     <!-- INSIGHTS -->
     <div class="section">
+      <div class="section-label">Risultati</div>
       <h2>Key Insights</h2>
+      <p>8 pattern chiave emersi dall'analisi, con relative raccomandazioni strategiche.</p>
 
       <div class="insights-grid">
         <div class="insight-card">
           <div class="insight-num">01</div>
           <h4>Concentrazione del fatturato</h4>
           <p>Il fatturato è concentrato su una minoranza di clienti ad alto valore, mentre la maggior parte genera una spesa contenuta.</p>
-          <div class="action">→ Fidelizzazione Top Client · Strategie di retention</div>
+          <div class="insight-action">Fidelizzazione Top Client · Strategie di retention</div>
         </div>
         <div class="insight-card">
           <div class="insight-num">02</div>
           <h4>Distribuzione clienti</h4>
           <p>La maggioranza appartiene al segmento Medium, indicando opportunità di crescita verso il segmento superiore.</p>
-          <div class="action">→ Upselling verso Top Client</div>
+          <div class="insight-action">Upselling verso Top Client</div>
         </div>
         <div class="insight-card">
           <div class="insight-num">03</div>
           <h4>Distribuzione della spesa</h4>
           <p>Distribuzione a coda lunga: pochi high spender generano gran parte del valore totale.</p>
-          <div class="action">→ Personalizzazione offerte · Segmentazione marketing</div>
+          <div class="insight-action">Personalizzazione offerte · Segmentazione marketing</div>
         </div>
         <div class="insight-card">
           <div class="insight-num">04</div>
           <h4>Frequenza e retention</h4>
-          <p>I clienti attivi mostrano una frequenza maggiore rispetto ai clienti persi.</p>
-          <div class="action">→ Aumentare frequenza per migliorare retention</div>
+          <p>I clienti attivi mostrano una frequenza d'acquisto significativamente maggiore rispetto ai clienti persi.</p>
+          <div class="insight-action">Aumentare frequenza → migliorare retention</div>
         </div>
         <div class="insight-card">
           <div class="insight-num">05</div>
           <h4>Recency e churn</h4>
           <p>Una quota significativa di clienti risulta inattiva nel periodo analizzato.</p>
-          <div class="action">→ Campagne di re-engagement · Offerte mirate</div>
+          <div class="insight-action">Campagne di re-engagement · Offerte mirate</div>
         </div>
         <div class="insight-card">
           <div class="insight-num">06</div>
-          <h4>Differenze tra negozi</h4>
-          <p>I negozi principali generano la maggior parte del fatturato con logiche replicabili.</p>
-          <div class="action">→ Replicare strategie top store · Ottimizzare outlier</div>
+          <h4>Perdita di valore latente</h4>
+          <p>Una parte del fatturato deriva da clienti oggi inattivi, recuperabili con azioni mirate.</p>
+          <div class="insight-action">Strategie di recupero clienti</div>
         </div>
         <div class="insight-card">
           <div class="insight-num">07</div>
-          <h4>Mix prodotto</h4>
-          <p>I prodotti ad alto volume non coincidono sempre con quelli a maggiore valore unitario.</p>
-          <div class="action">→ Ottimizzazione assortimento · Cross-selling</div>
+          <h4>Differenze tra negozi</h4>
+          <p>I negozi principali generano la maggior parte del fatturato con logiche di business replicabili.</p>
+          <div class="insight-action">Replicare strategie top store · Ottimizzare outlier</div>
         </div>
         <div class="insight-card">
           <div class="insight-num">08</div>
-          <h4>Perdita di valore latente</h4>
-          <p>Una parte del fatturato deriva da clienti oggi inattivi, recuperabili con azioni mirate.</p>
-          <div class="action">→ Strategie di recupero clienti</div>
+          <h4>Mix prodotto</h4>
+          <p>I prodotti ad alto volume non coincidono sempre con quelli a maggiore valore unitario.</p>
+          <div class="insight-action">Ottimizzazione assortimento · Cross-selling</div>
         </div>
       </div>
     </div>
@@ -446,8 +648,9 @@
 
     <!-- CONCLUSIONI -->
     <div class="section">
-      <h2>Conclusioni</h2>
-      <p>Il progetto dimostra come l'integrazione di analisi dati e logiche di business permetta di identificare segmenti ad alto valore, migliorare la retention clienti e supportare decisioni strategiche data-driven.</p>
+      <div class="section-label">Conclusioni</div>
+      <h2>Takeaway</h2>
+      <p>Il progetto dimostra come l'integrazione di analisi dati e logiche di business permetta di identificare segmenti ad alto valore, migliorare la retention clienti e supportare decisioni strategiche data-driven — trasformando dati transazionali grezzi in insight azionabili per il business.</p>
     </div>
 
   </div>
