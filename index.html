@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/png" href="favicon.png">
 
   <!-- Open Graph / LinkedIn -->
   <meta property="og:title" content="Matteo Toffanin | Data Analyst Portfolio">
@@ -196,8 +195,13 @@
       background-clip: text;
     }
 
+    .hero-text {
+      display: inline-flex;
+      flex-direction: column;
+      max-width: 100%;
+    }
+
     .hero p {
-      max-width: 870px;
       margin: 0;
       color: var(--muted);
       font-size: 1.05rem;
@@ -428,13 +432,20 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      .projects {
-        grid-template-columns: 1fr;
-      }
-
+      .projects { grid-template-columns: 1fr; }
       .card { padding: 24px; }
-
       .card-arrow { display: none; }
+      .skills-grid { grid-template-columns: repeat(2, 1fr); }
+      .section-header h2 { font-size: 1.8rem; }
+      .nav-links { gap: 16px; }
+    }
+
+    @media (max-width: 540px) {
+      .skills-grid { grid-template-columns: 1fr; }
+      .nav-links { gap: 12px; font-size: .8rem; }
+      .hero h1 { font-size: clamp(1.8rem, 7vw, 2.5rem); }
+      .contact-section { padding: 48px 0; }
+      .container { padding: 0 16px; }
     }
   </style>
 </head>
@@ -460,8 +471,10 @@
   <section class="hero">
     <canvas id="particles-canvas"></canvas>
     <div class="container">
-      <h1>Matteo Toffanin<br><span>Data Analyst | AI & Data Specialist</span></h1>
-      <p>Junior AI & Data Specialist con esperienza in analisi dati, dashboarding e automazione di processi aziendali. Python, SQL, Power BI e Machine Learning applicati in contesti manufacturing e retail per supportare decisioni data-driven.</p>
+      <div class="hero-text">
+        <h1>Matteo Toffanin<br><span>Data Analyst | AI & Data Specialist</span></h1>
+        <p>Junior AI & Data Specialist con esperienza in analisi dati, dashboarding e automazione di processi aziendali. Python, SQL, Power BI e Machine Learning applicati in contesti manufacturing e retail per supportare decisioni data-driven.</p>
+      </div>
     </div>
     <div class="hero-scroll">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
