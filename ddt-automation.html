@@ -321,7 +321,16 @@
 
     .img-block img {
       width: 100%;
+      max-height: 360px;
+      object-fit: cover;
+      object-position: top;
       display: block;
+      cursor: zoom-in;
+      transition: opacity .2s;
+    }
+
+    .img-block img:hover {
+      opacity: .88;
     }
 
     .img-block .caption {
@@ -330,6 +339,44 @@
       color: var(--muted);
       border-top: 1px solid var(--border);
     }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(0,0,0,.88);
+      backdrop-filter: blur(6px);
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 92vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.6);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      color: rgba(255,255,255,.6);
+      font-size: 1.5rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: color .2s;
+    }
+
+    .lightbox-close:hover { color: #fff; }
 
     /* ── IMPACT CARDS ── */
     .impact-grid {
@@ -409,6 +456,12 @@
 </head>
 
 <body>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <span class="lightbox-close" id="lightboxClose">&#x2715;</span>
+    <img id="lightboxImg" src="" alt="">
+  </div>
 
   <nav>
     <div class="inner">
@@ -514,17 +567,17 @@
       <p>Tre schermate rappresentative del flusso: documento originale in input, dati estratti strutturati e report delle incongruenze rilevate.</p>
 
       <div class="img-block">
-        <img src="ddt.png" alt="Input PDF DDT">
+        <img src="ddt.png" alt="Input PDF DDT" class="zoomable">
         <div class="caption">Input — Esempio di documento DDT originale in formato PDF</div>
       </div>
 
       <div class="img-block">
-        <img src="Automazione DDT/image2.png" alt="Output Excel strutturato">
+        <img src="Automazione DDT/image2.png" alt="Output Excel strutturato" class="zoomable">
         <div class="caption">Output Excel — Dati estratti automaticamente e strutturati per reparto</div>
       </div>
 
       <div class="img-block">
-        <img src="Automazione DDT/image3.png" alt="Controllo incongruenze">
+        <img src="Automazione DDT/image3.png" alt="Controllo incongruenze" class="zoomable">
         <div class="caption">Controllo incongruenze — Righe anomale rilevate automaticamente (confronto DDT vs ordini)</div>
       </div>
     </div>
@@ -573,6 +626,34 @@
   <footer>
     <p>© 2026 Matteo Toffanin — Portfolio</p>
   </footer>
+
+  <script>
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    document.querySelectorAll('.zoomable').forEach(img => {
+      img.addEventListener('click', () => {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
 
 </body>
 </html>
