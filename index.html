@@ -133,6 +133,71 @@
       transform-origin: left;
     }
 
+    /* ── HAMBURGER ── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      background: none;
+      border: none;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--muted);
+      border-radius: 2px;
+      transition: transform .3s, opacity .3s, background .2s;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: var(--accent); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: var(--accent); }
+
+    /* ── MOBILE MENU ── */
+    .mobile-menu {
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      right: 0;
+      background: rgba(13,15,20,.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .35s ease, padding .35s ease;
+    }
+
+    .mobile-menu.open {
+      max-height: 300px;
+      padding: 16px 0 20px;
+    }
+
+    .mobile-menu ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mobile-menu ul li a {
+      display: block;
+      padding: 14px 24px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color .2s, background .2s;
+    }
+
+    .mobile-menu ul li a:hover {
+      color: var(--text);
+      background: rgba(46,196,208,.05);
+    }
+
     /* ── HERO ── */
     .hero {
       display: flex;
@@ -437,12 +502,15 @@
       .card-arrow { display: none; }
       .skills-grid { grid-template-columns: repeat(2, 1fr); }
       .section-header h2 { font-size: 1.8rem; }
-      .nav-links { gap: 16px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: block; }
+      .nav-logo img { height: 30px; }
+      nav { position: relative; }
     }
 
     @media (max-width: 540px) {
       .skills-grid { grid-template-columns: 1fr; }
-      .nav-links { gap: 12px; font-size: .8rem; }
       .hero h1 { font-size: clamp(1.8rem, 7vw, 2.5rem); }
       .contact-section { padding: 48px 0; }
       .container { padding: 0 16px; }
@@ -454,7 +522,7 @@
   <div class="glow"></div>
 
   <!-- NAV -->
-  <nav>
+  <nav id="main-nav">
     <div class="container">
       <a href="#" class="nav-logo">
         <img src="logo.png" alt="Matteo Toffanin" height="40" style="display:block;">
@@ -463,6 +531,16 @@
         <li><a href="#projects">Progetti</a></li>
         <li><a href="#skills">Competenze</a></li>
         <li><a href="#contact">Contatti</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <ul>
+        <li><a href="#projects" class="mobile-link">Progetti</a></li>
+        <li><a href="#skills" class="mobile-link">Competenze</a></li>
+        <li><a href="#contact" class="mobile-link">Contatti</a></li>
       </ul>
     </div>
   </nav>
@@ -690,6 +768,23 @@
     window.addEventListener('resize', () => {
       resize();
       particles.forEach(p => p.reset(true));
+    });
+  </script>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      });
     });
   </script>
 
