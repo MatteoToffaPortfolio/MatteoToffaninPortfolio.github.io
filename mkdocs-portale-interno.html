@@ -4,10 +4,55 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="favicon.png">
-  <title>Portale Operativo</title>
+  <title>Portale Operativo — Matteo Toffanin</title>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── SCROLL PROGRESS ── */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), #5ddbe5);
+      z-index: 9999;
+      width: 0%;
+      transition: width 0.1s linear;
+      box-shadow: 0 0 8px rgba(46,196,208,.6);
+    }
+
+    /* ── CUSTOM CURSOR ── */
+    #cursor {
+      position: fixed;
+      width: 36px;
+      height: 36px;
+      border: 1.5px solid var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9997;
+      transform: translate(-50%, -50%);
+      transition: width .2s, height .2s, border-color .2s, background .2s;
+      opacity: 0;
+    }
+    #cursor-dot {
+      position: fixed;
+      width: 5px;
+      height: 5px;
+      background: var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+    }
+    #cursor.visible, #cursor-dot.visible { opacity: 1; }
+    #cursor.hovering {
+      width: 52px;
+      height: 52px;
+      background: rgba(46,196,208,.08);
+      border-color: #5ddbe5;
+    }
 
     :root {
       --bg:        #0d0f14;
@@ -27,16 +72,32 @@
       color: var(--text);
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       line-height: 1.7;
+      cursor: none;
+    }
+
+    @media (max-width: 768px) {
+      body { cursor: auto; }
+      #cursor, #cursor-dot { display: none; }
+    }
+
+    /* ── PARTICLES ── */
+    #particles-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
     }
 
     nav {
-      position: sticky; top: 0; z-index: 100;
+      position: sticky; top: 0; z-index: 101;
       background: rgba(13,15,20,.85);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
     nav .inner {
-      max-width: 1200px; margin: 0 auto; padding: 0 24px;
+      width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px;
       height: 60px; display: flex; align-items: center; justify-content: space-between;
     }
     .nav-logo img { display: block; }
@@ -53,19 +114,26 @@
     .back-link:hover { color: var(--text); }
     .back-link:hover::after { transform: scaleX(1); transform-origin: left; }
 
-    .page { max-width: 1200px; margin: 0 auto; padding: 72px 24px 120px; }
+    .page {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 72px 24px 120px;
+      position: relative;
+      z-index: 1;
+    }
 
     .project-header { margin-bottom: 72px; padding-bottom: 56px; border-bottom: 1px solid var(--border); }
     .project-meta { font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
     .project-header h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; letter-spacing: -.04em; line-height: 1.1; margin-bottom: 20px; }
-    .project-header .lead { color: var(--muted); font-size: 1.1rem; max-width: 1200px; margin-bottom: 32px; line-height: 1.75; }
+    .project-header .lead { color: var(--muted); font-size: 1.1rem; margin-bottom: 32px; line-height: 1.75; }
     .tags { display: flex; flex-wrap: wrap; gap: 8px; }
     .tag { padding: 4px 14px; background: var(--tag-bg); border: 1px solid var(--border); border-radius: 100px; font-size: .75rem; color: var(--muted); font-weight: 500; }
 
     .section { margin-bottom: 72px; }
     .section-label { font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
     .section h2 { font-size: 1.7rem; font-weight: 800; letter-spacing: -.03em; margin-bottom: 20px; line-height: 1.2; }
-    .section > p { color: var(--muted); font-size: .975rem; max-width: 1200px; margin-bottom: 16px; }
+    .section > p { color: var(--muted); font-size: .975rem; margin-bottom: 16px; }
 
     .sub-block { margin-top: 36px; }
     .sub-block h3 { font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
@@ -99,12 +167,6 @@
     .nav-mode-desc { font-size: .875rem; color: var(--muted); line-height: 1.6; }
     .nav-mode-tech { font-size: .75rem; color: var(--accent); font-weight: 600; padding-top: 6px; border-top: 1px solid var(--border); }
 
-    .code-block { background: #0a0c10; border: 1px solid var(--border); border-radius: 10px; padding: 20px 22px; font-family: 'Cascadia Code','Fira Code','Consolas',monospace; font-size: .82rem; line-height: 1.75; color: #b8c4d0; overflow-x: auto; margin-top: 16px; }
-    .c-comment { color: #4a5568; }
-    .c-keyword  { color: var(--accent); }
-    .c-string   { color: #68d391; }
-    .c-prop     { color: #fc8181; }
-
     /* MOCKUP — light mode */
     .portal-mockup { background: #f5f6f8; border: 1px solid #dde1e7; border-radius: 14px; overflow: hidden; margin-top: 20px; box-shadow: 0 4px 24px rgba(0,0,0,.18); }
     .mockup-bar { background: #0b4c9b; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; }
@@ -130,6 +192,23 @@
     .dashboard-block img { width: 100%; display: block; cursor: zoom-in; transition: opacity .2s; }
     .dashboard-block img:hover { opacity: .88; }
     .dashboard-block .caption { padding: 14px 20px; font-size: .8rem; color: var(--muted); border-top: 1px solid var(--border); }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(0,0,0,.88);
+      backdrop-filter: blur(6px);
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; border-radius: 10px; box-shadow: 0 24px 80px rgba(0,0,0,.6); }
+    .lightbox-close { position: absolute; top: 20px; right: 24px; color: rgba(255,255,255,.6); font-size: 1.5rem; cursor: pointer; line-height: 1; transition: color .2s; }
+    .lightbox-close:hover { color: #fff; }
 
     .insights-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-top: 8px; }
     .insight-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 10px; transition: border-color .25s, transform .25s; }
@@ -171,6 +250,22 @@
 </head>
 
 <body>
+
+  <!-- Particles background -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Scroll progress bar -->
+  <div id="scroll-progress"></div>
+
+  <!-- Custom cursor -->
+  <div id="cursor"></div>
+  <div id="cursor-dot"></div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <span class="lightbox-close" id="lightboxClose">&#x2715;</span>
+    <img id="lightboxImg" src="" alt="">
+  </div>
 
   <nav>
     <div class="inner">
@@ -231,7 +326,6 @@
           <div class="kpi-label">Sport</div>
           <div class="kpi-sub">Con guide calzature dedicate</div>
         </div>
-
       </div>
     </div>
 
@@ -434,7 +528,7 @@
         <div class="insight-card">
           <div class="insight-num">02</div>
           <h4>Product knowledge sempre disponibile</h4>
-          <p>Il venditore può consultare in tempo reale la tecnologia Air Unit di Nike, il Wave System di Mizuno o i tipi di appoggio plantare o i tipi di appoggio plantare durante una conversazione con il cliente — senza cercare tra fogli cartacei.</p>
+          <p>Il venditore può consultare in tempo reale la tecnologia Air Unit di Nike, il Wave System di Mizuno o i tipi di appoggio plantare durante una conversazione con il cliente — senza cercare tra fogli cartacei.</p>
           <div class="insight-action">Sezione calzature · 52 pagine brand + biomeccanica</div>
         </div>
         <div class="insight-card">
@@ -489,6 +583,130 @@
   <footer>
     <p>© 2026 Matteo Toffanin — Portfolio</p>
   </footer>
+
+  <script>
+    /* ── PARTICLES ── */
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    const COUNT = 80;
+
+    function resize() {
+      canvas.width  = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+
+    class Particle {
+      constructor() { this.reset(true); }
+      reset(initial) {
+        this.x  = Math.random() * canvas.width;
+        this.y  = initial ? Math.random() * canvas.height : canvas.height + 10;
+        this.r  = Math.random() * 3 + 1;
+        this.vx = (Math.random() - 0.5) * 0.3;
+        this.vy = -(Math.random() * 0.4 + 0.15);
+        this.alpha = Math.random() * 0.5 + 0.15;
+      }
+      update() {
+        this.x += this.vx; this.y += this.vy;
+        if (this.y < -10) this.reset(false);
+        if (this.x < -10) this.x = canvas.width + 10;
+        if (this.x > canvas.width + 10) this.x = -10;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(46,196,208,${this.alpha})`;
+        ctx.fill();
+      }
+    }
+
+    function drawLines() {
+      const DIST = 120;
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const d = Math.sqrt(dx*dx + dy*dy);
+          if (d < DIST) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(46,196,208,${0.18*(1-d/DIST)})`;
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function loop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawLines();
+      particles.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(loop);
+    }
+
+    resize();
+    particles = Array.from({ length: COUNT }, () => new Particle());
+    loop();
+    window.addEventListener('resize', () => { resize(); particles.forEach(p => p.reset(true)); });
+
+    /* ── SCROLL PROGRESS ── */
+    const progressBar = document.getElementById('scroll-progress');
+    window.addEventListener('scroll', () => {
+      const total = document.body.scrollHeight - window.innerHeight;
+      progressBar.style.width = (window.scrollY / total * 100) + '%';
+    });
+
+    /* ── CUSTOM CURSOR ── */
+    const cursor    = document.getElementById('cursor');
+    const cursorDot = document.getElementById('cursor-dot');
+    let curX = 0, curY = 0, dotX = 0, dotY = 0;
+
+    document.addEventListener('mousemove', e => {
+      dotX = e.clientX; dotY = e.clientY;
+      cursorDot.style.left = dotX + 'px';
+      cursorDot.style.top  = dotY + 'px';
+      cursor.classList.add('visible');
+      cursorDot.classList.add('visible');
+    });
+
+    (function animCursor() {
+      curX += (dotX - curX) * 0.12;
+      curY += (dotY - curY) * 0.12;
+      cursor.style.left = curX + 'px';
+      cursor.style.top  = curY + 'px';
+      requestAnimationFrame(animCursor);
+    })();
+
+    document.querySelectorAll('a, button, .insight-card, .section-card, .nav-mode-card, .kpi-card').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+    });
+
+    /* ── LIGHTBOX ── */
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    document.querySelectorAll('.zoomable').forEach(img => {
+      img.addEventListener('click', () => {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
 
 </body>
 </html>
